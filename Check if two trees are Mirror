@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* right;
+    struct Node* left;
+};
+
+int areMirror(struct Node* a, struct Node* b)
+{
+    if(a == NULL && b == NULL)
+    return 1;
+    
+    else if(a == NULL  || b == NULL)
+    return 0;
+    
+    else
+    return a->data == b->data && areMirror(a->left , b->right) && areMirror(a->right, b->left);
+}
+struct Node* newNode(int data)
+{
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data  = data;
+    node->left  =  node->right  = NULL;
+    return(node);
+}
+ 
+/* Driver program to test areMirror() */
+int main()
+{
+    struct Node *a = newNode(1);
+    struct Node *b = newNode(1);
+    a->left = newNode(2);
+    a->right = newNode(3);
+    a->left->left  = newNode(4);
+    a->left->right = newNode(5);
+ 
+    b->left = newNode(3);
+    b->right = newNode(2);
+    b->right->left = newNode(5);
+    b->right->right = newNode(4);
+ 
+    areMirror(a, b)? printf("Yes") : printf("No");
+ 
+    return 0;
+}
